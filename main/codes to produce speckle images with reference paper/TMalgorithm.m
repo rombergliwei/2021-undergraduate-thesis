@@ -1,0 +1,27 @@
+%% 生成TM
+Nx=28;
+Ny=28;
+Mx=28;
+My=28;
+load('test7.mat');
+N=Nx*Ny;
+M=Mx*My;
+TM_xx= raylrnd(sqrt(1/2/M),M,N).*exp(1i*random('unif',-pi,+pi-eps('double'),M,N)); 
+%X=Test(1,:,:);
+%E_in_1d = X ./ norm(X); 
+E_in_1d=Test1{1,1}(:,:);
+%E_in_2d_x=reshape(E_in_1d,[Nx,Ny]);
+%E_in_2d_y=reshape(E_in_1d,[Nx,Ny]);
+E_out_1d_x=TM_xx*reshape(E_in_1d,[Nx*Ny,1]);
+Y_prac = awgn(E_out_1d_x,100,'measured','linear'); 
+Iyy = abs(Y_prac).^2; 
+E_out_2d_x=reshape(Iyy,[Mx,My]);
+I=mat2gray(E_in_1d);
+figure,imshow(I);
+J=mat2gray(E_out_2d_x);
+figure,imshow(J);
+load('example_inputField(1).mat');
+shiyan = abs(X).^2;
+SHIYAN = reshape(shiyan,[32,32]);
+JIEGUO=mat2gray(SHIYAN);
+figure,imshow(JIEGUO);
